@@ -2,7 +2,6 @@ package com.example.yclone.repository;
 
 import com.example.yclone.models.Commentary;
 import com.example.yclone.models.CommentaryLike;
-import com.example.yclone.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

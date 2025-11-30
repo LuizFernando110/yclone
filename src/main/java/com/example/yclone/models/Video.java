@@ -3,8 +3,6 @@ package com.example.yclone.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @Entity
 public class Video extends Media{

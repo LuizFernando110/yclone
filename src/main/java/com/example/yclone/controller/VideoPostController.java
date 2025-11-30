@@ -5,7 +5,6 @@ import com.example.yclone.dto.videoPost.UpdateVideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDetailDTO;
 import com.example.yclone.service.VideoPostService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

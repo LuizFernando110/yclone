@@ -1,7 +1,6 @@
 package com.example.yclone.controller;
 
 import com.example.yclone.dto.VideoPostLikeDTO;
-import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.models.VideoPostLike;
 import com.example.yclone.service.VideoPostLikeService;
 import org.springframework.beans.factory.annotation.Autowired;

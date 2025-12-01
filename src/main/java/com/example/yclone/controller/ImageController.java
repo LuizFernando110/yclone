@@ -9,6 +9,8 @@ import com.example.yclone.models.User;
 import com.example.yclone.repository.UserRepository;
 import com.example.yclone.service.ImageService;
 import com.example.yclone.service.MediaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/image")
 @RequiredArgsConstructor
+@Tag(name = "Image", description = "Gerenciamento de imagens enviadas pelos usuários")
 public class ImageController {
+
     @Autowired
     private ImageService imageService;
 
@@ -37,28 +41,44 @@ public class ImageController {
     @Autowired
     private MediaService mediaService;
 
+    @Operation(
+            summary = "Lista imagens de um usuário",
+            description = "Retorna todas as imagens associadas ao usuário especificado pelo ID."
+    )
     @GetMapping("user/{userId}")
     public List<ImageDTO> list(@PathVariable UUID userId) {
         return imageService.findByUserId(userId);
     }
 
+    @Operation(
+            summary = "Busca imagem pelo ID",
+            description = "Retorna os detalhes completos de uma imagem específica."
+    )
     @GetMapping("/{imageId}")
     public ImageDetailDTO getById(@PathVariable UUID imageId) {
         return imageService.getImageDetail(imageId);
     }
 
+    @Operation(
+            summary = "Cria uma nova imagem",
+            description = "Registra uma imagem no sistema usando dados fornecidos no corpo da requisição. Não realiza upload do arquivo."
+    )
     @PostMapping
     public ImageDTO create(@RequestBody CreateImageDTO dto) {
         return imageService.createImage(dto);
     }
 
+    @Operation(
+            summary = "Faz upload de uma imagem",
+            description = "Envia um arquivo de imagem, armazena no servidor e cria o registro correspondente no banco."
+    )
     @PostMapping("/upload")
     public ResponseEntity<ImageDetailDTO> uploadImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam("userId") UUID userId
     ) throws Exception {
 
-        if(file.isEmpty()) {
+        if (file.isEmpty()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "File cannot be empty"
             );
@@ -76,14 +96,22 @@ public class ImageController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
+    @Operation(
+            summary = "Atualiza uma imagem",
+            description = "Atualiza os dados de uma imagem já existente, sem alterar o arquivo enviado."
+    )
     @PutMapping("/{imageId}")
     public ImageDTO update(@PathVariable UUID imageId,
                            @RequestBody UpdateImageDTO dto) {
         return imageService.updateImage(imageId, dto);
     }
 
+    @Operation(
+            summary = "Remove uma imagem",
+            description = "Deleta permanentemente uma imagem com base no seu ID."
+    )
     @DeleteMapping("/{id}")
-    public  void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable UUID id) {
         imageService.deleteImage(id);
     }
 }

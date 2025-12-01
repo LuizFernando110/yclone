@@ -35,6 +35,9 @@ public class VideoPost {
     @ManyToMany(mappedBy = "videos")
     private List<Category> categories;
 
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<View> views;
+
     @Column(name = "posted_at", nullable = false)
     private LocalDateTime postedAt;
 }

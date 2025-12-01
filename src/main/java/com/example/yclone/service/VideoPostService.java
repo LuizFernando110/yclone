@@ -4,6 +4,8 @@ import com.example.yclone.dto.videoPost.CreateVideoPostDTO;
 import com.example.yclone.dto.videoPost.UpdateVideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDetailDTO;
+import com.example.yclone.models.Image;
+import com.example.yclone.models.Video;
 import com.example.yclone.models.VideoPost;
 import com.example.yclone.repository.ImageRepository;
 import com.example.yclone.repository.UserRepository;
@@ -87,6 +89,29 @@ public class VideoPostService {
     public VideoPostDetailDTO updateVideoPost(UUID id, UpdateVideoPostDTO dto) {
         VideoPost videoPost = videoPostRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Video post not found"));
+
+        if(dto.getTitle() != null) {
+            videoPost.setTitle(dto.getTitle());
+        }
+
+        if(dto.getVideo() != null) {
+            Video video = videoRepository.findById(dto.getVideo())
+                    .orElseThrow(() -> new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Video not found")
+                    );
+            videoPost.setVideo(video);
+        }
+
+        if(dto.getImage() != null) {
+            Image thumbnail = imageRepository.findById(dto.getImage())
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Image not found")
+                    );
+            videoPost.setThumbnail(thumbnail);
+        }
+
         VideoPost updatedVideoPost = videoPostRepository.save(videoPost);
         return modelMapper.map(updatedVideoPost, VideoPostDetailDTO.class);
     }

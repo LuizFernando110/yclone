@@ -13,10 +13,10 @@ import java.util.UUID;
 @Data
 public class VideoPostDetailDTO {
     private UUID id;
+    private LocalDateTime postedAt;
     private String title;
-    private VideoDTO video;
     private UserDTO channel;
     private ImageDTO thumbnail;
+    private VideoDTO video;
     private List<CommentaryDTO> commentaries;
-    private LocalDateTime createdAt;
 }

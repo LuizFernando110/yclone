@@ -22,7 +22,7 @@ public class MediaService {
 
         String fileName = minioService.uploadFile(file);
 
-        String url = "/minio/" + fileName;
+        String url = "/minio/yclone/" + fileName;
 
         Video video = new Video();
         video.setFileName(fileName);
@@ -42,7 +42,7 @@ public class MediaService {
     public Image uploadImage(MultipartFile file, User user) throws Exception {
 
         String fileName = minioService.uploadFile(file);
-        String url = "/minio/" + fileName;
+        String url = "/minio/yclone" + fileName;
 
         Image image = new Image();
         image.setFileName(fileName);

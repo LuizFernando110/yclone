@@ -10,8 +10,8 @@ import java.util.UUID;
 @Data
 public class VideoPostDTO {
     private UUID id;
+    private LocalDateTime postedAt;
     private String title;
     private VideoDTO video;
     private ImageDTO thumbnail;
-    private LocalDateTime postedAt;
 }

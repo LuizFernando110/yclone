@@ -25,7 +25,7 @@ public class VideoPost {
     @JoinColumn(name = "channel_id", nullable = false)
     private User channel;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "thumbnail_id")
     private Image thumbnail;
 

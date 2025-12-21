@@ -48,7 +48,6 @@ class ImageServiceTest {
 
         imageDTO = new ImageDTO();
         imageDTO.setId(imageId);
-        imageDTO.setFileName("teste.png");
 
         imageDetailDTO = new ImageDetailDTO();
         imageDetailDTO.setId(imageId);

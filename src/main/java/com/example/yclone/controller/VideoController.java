@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -94,7 +95,7 @@ public class VideoController {
     )
     public ResponseEntity<VideoDetailDTO> uploadVideo(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("userId") UUID userId
+            @AuthenticationPrincipal User user
     ) throws Exception {
 
         if(file.isEmpty()) {
@@ -102,11 +103,6 @@ public class VideoController {
                     HttpStatus.BAD_REQUEST, "File cannot be empty"
             );
         }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "User not found"
-                ));
 
         Video video = mediaService.uploadVideo(file, user);
         VideoDetailDTO dto = modelMapper.map(video, VideoDetailDTO.class);

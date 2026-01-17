@@ -102,7 +102,7 @@ class UserServiceTest {
 
         UserDetailDTO result = userService.updateUser(userId, dto);
         assertNotNull(result);
-        assertEquals("novoNome", user.getUserName());
+        assertEquals("novoNome", user.getUsername());
         assertEquals("novo@example.com", user.getEmail());
     }
 

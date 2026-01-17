@@ -51,7 +51,7 @@ public class UserService {
 
         if (dto.getUserName() != null && !dto.getUserName().isBlank()) {
             if (userRepository.existsByUserName(dto.getUserName()) &&
-                    !user.getUserName().equals(dto.getUserName())) {
+                    !user.getUsername().equals(dto.getUserName())) {
                 throw new RuntimeException("Username already exists");
             }
             user.setUserName(dto.getUserName());

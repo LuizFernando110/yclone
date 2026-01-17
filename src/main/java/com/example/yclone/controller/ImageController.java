@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -75,7 +76,7 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<ImageDetailDTO> uploadImage(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("userId") UUID userId
+            @AuthenticationPrincipal User user
     ) throws Exception {
 
         if (file.isEmpty()) {
@@ -84,13 +85,7 @@ public class ImageController {
             );
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "User not found"
-                ));
-
         Image image = mediaService.uploadImage(file, user);
-
         ImageDetailDTO dto = modelMapper.map(image, ImageDetailDTO.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);

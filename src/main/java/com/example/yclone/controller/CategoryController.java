@@ -25,12 +25,22 @@ public class CategoryController {
             summary = "Lista todas as categorias existentes",
             description = """
                     Lista todas as categorias existentes, 
-                    retornando apenas o nome de cada
+                    retornando todos os dados de cada.
                     """
     )
     public List<CategoryDetailDTO>  getCategories() {
         return categoryService.findAll();
     }
+
+    @GetMapping("/simple")
+    @Operation(
+            summary = "Lista todas as categorias existentes",
+            description = """
+                    Lista todas as categorias existentes, 
+                    retornando apenas o nome de cada
+                    """
+    )
+    public List<CategoryDTO> getSimpleCategories() {return categoryService.getAllCategories();}
 
     @GetMapping("/{categoryId}")
     @Operation(
@@ -58,7 +68,7 @@ public class CategoryController {
             summary = "Altera uma categoria",
             description = """
                     Altera o nome de uma categoria através de um
-                    nome dado pleo corpo da requisição.
+                    nome dado pelo corpo da requisição.
                     """
     )
     public CategoryDTO updateCategory(@PathVariable UUID categoryId,
@@ -76,5 +86,20 @@ public class CategoryController {
     )
     public void deleteCategory(@PathVariable UUID categoryId) {
         categoryService.deleteCategory(categoryId);
+    }
+
+    @PostMapping("/{categoryId}")
+    @Operation(
+            summary = "Adicionar videos a categoria",
+            description = """
+                    Adiciona videos a uma categoria via id passado na requisição
+                    e uma lista de id's dos vídeos.
+                    """
+    )
+    public CategoryDetailDTO addVideosToCategory(
+            @PathVariable UUID categoryId,
+            @RequestBody List<UUID> videoPostIds
+    ) {
+        return categoryService.addVideoPost(categoryId, videoPostIds);
     }
 }

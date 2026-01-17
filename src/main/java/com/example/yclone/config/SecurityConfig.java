@@ -36,9 +36,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         //Video Post
                         .requestMatchers(HttpMethod.GET, "/video-post/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/video-post").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/video-post/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/video-post/**").authenticated()
                         //Video
                         .requestMatchers("/video/**").authenticated()
                         //Commentary
@@ -48,7 +45,7 @@ public class SecurityConfig {
                         //VideoPostLike
                         .requestMatchers("/video-post-likes/**").authenticated()
                         //Category
-                        .requestMatchers("/category/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/category/**").permitAll()
                         //Views
                         .requestMatchers("/views/**").permitAll()
                         .anyRequest().authenticated()

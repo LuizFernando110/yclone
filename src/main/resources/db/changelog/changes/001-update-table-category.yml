@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Querubim
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: ALTER TABLE category ALTER COLUMN id TYPE bigint USING id::bigint;
+
+        - addAutoIncrement:
+            tableName: category
+            columnName: id
+            columnDataType: bigint
+
+  - changeSet:
+      id: 2
+      author: Querubim
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: ALTER TABLE category_video ALTER COLUMN category_id TYPE bigint USING category_id::bigint;

@@ -33,11 +33,11 @@ class CategoryServiceTest {
     private CategoryDTO categoryDTO;
     private CategoryDetailDTO categoryDetailDTO;
 
-    private UUID categoryId;
+    private Long categoryId;
 
     @BeforeEach
     void setUp() {
-        categoryId = UUID.randomUUID();
+        categoryId = 1L;
         category = new Category();
         category.setId(categoryId);
         category.setName("Teste");

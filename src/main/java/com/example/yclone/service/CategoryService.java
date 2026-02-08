@@ -38,14 +38,14 @@ public class CategoryService {
     }
 
     // Read
-    public CategoryDetailDTO getCategoryById(UUID id) {
+    public CategoryDetailDTO getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         return modelMapper.map(category, CategoryDetailDTO.class);
     }
 
     // Update
-    public CategoryDTO UpdatedCategory(UUID id, UpdateCategoryDTO dto) {
+    public CategoryDTO UpdatedCategory(Long id, UpdateCategoryDTO dto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         modelMapper.map(dto, category);
@@ -54,7 +54,7 @@ public class CategoryService {
     }
 
     // Delete
-    public void deleteCategory(UUID id) {
+    public void deleteCategory(Long id) {
         if(!categoryRepository.existsById(id)) {
             throw new RuntimeException("Category not found");
         }

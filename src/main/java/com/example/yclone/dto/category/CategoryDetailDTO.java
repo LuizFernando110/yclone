@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class CategoryDetailDTO {
-    private UUID id;
+    private Long id;
     private String name;
     private List<VideoPostDTO> videos;
 }

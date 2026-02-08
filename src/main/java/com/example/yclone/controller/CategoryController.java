@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/category")
@@ -37,7 +36,7 @@ public class CategoryController {
             summary = "Retorna uma categoria via id",
             description = "Retorna detalhadamente todos os dados categoria via id"
     )
-    public CategoryDetailDTO getCategory(@PathVariable UUID categoryId) {
+    public CategoryDetailDTO getCategory(@PathVariable Long categoryId) {
         return categoryService.getCategoryById(categoryId);
     }
 
@@ -61,7 +60,7 @@ public class CategoryController {
                     nome dado pleo corpo da requisição.
                     """
     )
-    public CategoryDTO updateCategory(@PathVariable UUID categoryId,
+    public CategoryDTO updateCategory(@PathVariable Long categoryId,
                                       @RequestBody UpdateCategoryDTO dto) {
         return categoryService.UpdatedCategory(categoryId, dto);
     }
@@ -74,7 +73,7 @@ public class CategoryController {
                     requisição pós barra. 
                     """
     )
-    public void deleteCategory(@PathVariable UUID categoryId) {
+    public void deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
     }
 }

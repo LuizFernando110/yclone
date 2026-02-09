@@ -6,6 +6,7 @@ import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDetailDTO;
 import com.example.yclone.mapper.VideoPostMapper;
 import com.example.yclone.models.Image;
+import com.example.yclone.models.User;
 import com.example.yclone.models.Video;
 import com.example.yclone.models.VideoPost;
 import com.example.yclone.repository.ImageRepository;
@@ -15,6 +16,7 @@ import com.example.yclone.repository.VideoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,23 +45,17 @@ public class VideoPostService {
     private VideoPostMapper videoPostMapper;
 
     // Create
-    public VideoPostDTO createVideoPost(CreateVideoPostDTO dto) {
-
+    public VideoPostDTO createVideoPost(CreateVideoPostDTO dto, User user) {
         VideoPost videoPost = new VideoPost();
         videoPost.setPostedAt(LocalDateTime.now());
         videoPost.setTitle(dto.getTitle());
+
+        videoPost.setChannel(user);
 
         videoPost.setVideo(
                 videoRepository.findById(dto.getVideoId())
                         .orElseThrow(() -> new ResponseStatusException(
                                 HttpStatus.NOT_FOUND, "Video Not Found"
-                        ))
-        );
-
-        videoPost.setChannel(
-                userRepository.findById(dto.getChannelId())
-                        .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, "User Not Found"
                         ))
         );
 

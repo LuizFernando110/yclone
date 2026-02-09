@@ -4,10 +4,12 @@ import com.example.yclone.dto.videoPost.CreateVideoPostDTO;
 import com.example.yclone.dto.videoPost.UpdateVideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDetailDTO;
+import com.example.yclone.models.User;
 import com.example.yclone.service.VideoPostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +46,11 @@ public class VideoPostController {
             description = "Recebe os dados de criação de um vídeo e retorna o registro criado."
     )
     @PostMapping
-    public VideoPostDTO create(@RequestBody CreateVideoPostDTO dto){
-        return videoPostService.createVideoPost(dto);
+    public VideoPostDTO create(
+            @RequestBody CreateVideoPostDTO dto,
+            @AuthenticationPrincipal User user
+    ){
+        return videoPostService.createVideoPost(dto, user);
     }
 
     @Operation(

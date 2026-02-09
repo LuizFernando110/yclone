@@ -4,6 +4,7 @@ import com.example.yclone.dto.videoPost.CreateVideoPostDTO;
 import com.example.yclone.dto.videoPost.UpdateVideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDTO;
 import com.example.yclone.dto.videoPost.VideoPostDetailDTO;
+import com.example.yclone.mapper.VideoPostMapper;
 import com.example.yclone.models.Image;
 import com.example.yclone.models.Video;
 import com.example.yclone.models.VideoPost;
@@ -38,6 +39,9 @@ public class VideoPostService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private VideoPostMapper videoPostMapper;
+
     // Create
     public VideoPostDTO createVideoPost(CreateVideoPostDTO dto) {
 
@@ -67,14 +71,14 @@ public class VideoPostService {
         );
 
         VideoPost saved = videoPostRepository.save(videoPost);
-        return modelMapper.map(saved, VideoPostDTO.class);
+        return videoPostMapper.toDTO(saved);
     }
 
     // List
     public List<VideoPostDTO> findAll() {
         List<VideoPost> videoPosts = videoPostRepository.findAll();
-        return videoPosts.stream().map(videoPost -> modelMapper
-                .map(videoPost, VideoPostDTO.class))
+        return videoPosts.stream()
+                .map(videoPostMapper::toDTO)
                 .toList();
     }
 
@@ -82,7 +86,7 @@ public class VideoPostService {
     public VideoPostDetailDTO getVideoPostById(UUID id) {
         VideoPost videoPost = videoPostRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Video post not found"));
-        return modelMapper.map(videoPost, VideoPostDetailDTO.class);
+        return videoPostMapper.toDetailDTO(videoPost);
     }
 
     // Update
@@ -113,7 +117,7 @@ public class VideoPostService {
         }
 
         VideoPost updatedVideoPost = videoPostRepository.save(videoPost);
-        return modelMapper.map(updatedVideoPost, VideoPostDetailDTO.class);
+        return videoPostMapper.toDetailDTO(updatedVideoPost);
     }
 
     // Delete
